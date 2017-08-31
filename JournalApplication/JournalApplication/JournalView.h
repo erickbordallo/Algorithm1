@@ -149,7 +149,8 @@ private:
 
 	
 
-	//This is how I am doing to save as a txt file. In order to save as xml file, I should include another function to save as XML
+	//This is how I am doing to save as a txt file. In order to save as xml file or other type of file, I should include another function to
+	//save as the type of the file that you want, 
 	//and then, on function Update, in this same class, give the user an option to save as an xml file.
 	void SaveAsTXT(Journal& journal)
 	{
