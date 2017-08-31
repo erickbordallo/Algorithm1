@@ -45,15 +45,30 @@ public:
 
 	void PrintJournalInRange(int firstEntry, int lastEntry)
 	{
+		HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+		int k;
+		k = 15; //WHITE
+		SetConsoleTextAttribute(hConsole, k);
+
 		cout << endl;
-		cout << "TITLE: "<<_mTitle << endl;
+		cout << "TITLE: ";
+		k = 10;
+		SetConsoleTextAttribute(hConsole, k);
+		cout<< _mTitle << endl;
 		cout << endl;
+		k = 10;
 
 		for (list<Entry>::const_iterator iterator = _mEntries.begin(), end = _mEntries.end(); iterator != end; ++iterator)
 		{
 			if (iterator->_mID >= firstEntry && iterator->_mID <= lastEntry)
 			{
-				cout << iterator->_mID << "             " << iterator->_mContent << "             " << iterator->_mTimeStamp << endl;
+				k = 10;
+				SetConsoleTextAttribute(hConsole, k);
+				cout << iterator->_mID << " - ";
+				cout << iterator->_mTimeStamp << " | ";
+				k = 11;
+				SetConsoleTextAttribute(hConsole, k);
+				cout << iterator->_mContent << endl;
 			}
 		}
 	}

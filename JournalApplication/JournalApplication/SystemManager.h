@@ -3,6 +3,7 @@
 
 
 #include <iostream>
+#include <Windows.h>
 #include <list>
 #include <string.h>
 
@@ -64,6 +65,24 @@ public:
 		}
 	}
 
+
+	char* GetJournalTitle(int id)
+	{
+		int i = 0;
+		char* Title = " ";
+		for (list<Journal>::iterator iterator = _mJournals.begin(), end = _mJournals.end(); iterator != end; ++iterator)
+		{
+			i++;
+			if (i == id)
+			{
+				Title = iterator->_mTitle;
+				return Title;
+			}
+		}
+
+		return Title;
+	}
+
 	void AccessJournal(char* title)
 	{
 		for (list<Journal>::iterator iterator = _mJournals.begin(), end = _mJournals.end(); iterator != end; ++iterator)
@@ -78,13 +97,24 @@ public:
 
 	void PrintJournals()
 	{
+
+		HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+		int k; 
+
+		k = 15; //WHITE
+		SetConsoleTextAttribute(hConsole, k);
 		cout << "YOUR JOURNALS--------------------------------------------" << endl;
 		cout << endl;
-
+		int i = 0;
 		for (list<Journal>::const_iterator iterator = _mJournals.begin(), end = _mJournals.end(); iterator != end; ++iterator)
 		{
-			cout << iterator->_mTitle << endl;;
+			k = 10; //GREEN
+			i++;
+			SetConsoleTextAttribute(hConsole, k);
+			cout << i << ") " << iterator->_mTitle << endl;
 		}
+		k = 15; //WHITE
+		SetConsoleTextAttribute(hConsole, k);
 		cout << endl;
 		cout << "----------------------------------------------------------" << endl;
 	}

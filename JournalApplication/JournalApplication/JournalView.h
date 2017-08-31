@@ -30,6 +30,10 @@ public:
 	{
 		char option = ' ';
 		
+		HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+		int k;
+		k = 15;
+		SetConsoleTextAttribute(hConsole, k);
 		int firstEntryId;
 		int lastEntryId;
 		do
@@ -42,6 +46,7 @@ public:
 
 			journal.PrintJournalInRange(firstEntryId, lastEntryId);
 
+			SetConsoleTextAttribute(hConsole, k);
 			cout << "---------------------------------------------------------------------------------------" << endl;
 			cout << "(1) FIRST PAGE----------(2) PREVIOUS PAGE----------(3) NEXT PAGE----------(4) LAST PAGE" << endl;
 			cout << "---------------------------------------------------------------------------------------" << endl;
@@ -142,7 +147,10 @@ private:
 		}
 	}
 
+	
 
+	//This is how I am doing to save as a txt file. In order to save as xml file, I should include another function to save as XML
+	//and then, on function Update, in this same class, give the user an option to save as an xml file.
 	void SaveAsTXT(Journal& journal)
 	{
 		cout << "Saving..." << endl;
@@ -160,7 +168,7 @@ private:
 
 		for (list<Entry>::const_iterator iterator = journal._mEntries.begin(), end = journal._mEntries.end(); iterator != end; ++iterator)
 		{
-			txtFile << iterator->_mID << ")  " << iterator->_mContent << "      DATE: " << iterator->_mTimeStamp << endl;
+			txtFile << iterator->_mID << " - " << iterator->_mTimeStamp << " | " << iterator->_mContent << endl; ;
 		}
 
 		txtFile.close();

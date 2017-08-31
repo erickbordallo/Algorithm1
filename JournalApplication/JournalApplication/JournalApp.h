@@ -39,8 +39,15 @@ private:
 
 	void Update(char option)
 	{
+		HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+		int k;
+
+		k = 15; //WHITE
+		SetConsoleTextAttribute(hConsole, k);
 		string s;
 		char* title;
+		char opt;
+		int id;
 		switch (option)
 		{
 		case 'a':
@@ -52,19 +59,39 @@ private:
 			_mSysManager.CreateNewJournal(title);
 			break;
 		case 'r':
-			cout << "Type the title of the journal that you want to remove:" << endl;
-			cin.ignore();
-			getline(cin, s);
-			title = new char[s.size() + 1];
-			memcpy(title, s.c_str(), s.size() + 1);
-			_mSysManager.DeleteJournal(title);
+			cout << "Type the number of the Journal that you want to remove:" << endl;
+			cin >> id;
+			title = _mSysManager.GetJournalTitle(id);
+			if (strcmp(title, " ") != 0)
+			{
+				do
+				{
+					cout << "Do you want to remove:";
+					k = 10; 
+					SetConsoleTextAttribute(hConsole, k); 
+					cout <<_mSysManager.GetJournalTitle(id) << endl;
+					k = 15;
+					SetConsoleTextAttribute(hConsole, k);
+					cout << "Type: (y) yes  (n) no" << endl;
+					cin >> opt;
+				} while (opt != 'y' && opt != 'n');
+
+				if (opt == 'y')
+				{
+					_mSysManager.DeleteJournal(_mSysManager.GetJournalTitle(id));
+				}
+			}
+			else
+			{
+				cout << "This Journal is not on the list." << endl;
+			}
+			
+			
 			break;
 		case 'v':
-			cout << "Type the title of the journal that you want to visualize:" << endl;
-			cin.ignore();
-			getline(cin, s);
-			title = new char[s.size() + 1];
-			memcpy(title, s.c_str(), s.size() + 1);
+			cout << "Type the number of the journal that you want to visualize:" << endl;
+			cin >> id;
+			title = _mSysManager.GetJournalTitle(id);
 			_mSysManager.AccessJournal(title);
 			break;
 		case 'e':
@@ -73,6 +100,7 @@ private:
 			break;
 		}
 	}
+
 
 	void ShowMenu()
 	{
