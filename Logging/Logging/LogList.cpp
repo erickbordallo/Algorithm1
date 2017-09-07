@@ -14,7 +14,7 @@ void LogList::CreatePartition(int bufferSize)
 	_mPartition.Insert(newBuffer);
 }
 
-void LogList::AddData(char* data)
+void LogList::Log(char* data)
 {
 	if (!_mPartition.last->_mData.AddLog(data))
 	{
@@ -53,7 +53,7 @@ void LogList::PrintLogs()
 
 }
 
-void LogList::SaveToFile()
+LogList::~LogList()
 {
 	ofstream logFile;
 
@@ -65,6 +65,11 @@ void LogList::SaveToFile()
 
 	try
 	{
+		cout << "Saving..." << endl;
+
+		cout << endl;
+
+		
 		logFile.open("Log.txt");
 
 		if (current == nullptr)
@@ -72,7 +77,7 @@ void LogList::SaveToFile()
 			logFile << "EMPTY LOG ERROR." << endl;
 			return;
 		}
-		
+
 		int index = 0;
 
 		while (current != nullptr)
@@ -87,12 +92,13 @@ void LogList::SaveToFile()
 			previous = current;
 			current = previous->_mNextPtr;
 		}
-		
+
 		logFile.close();
+
+		cout << "Done." << endl;
 	}
 	catch (exception ex)
 	{
 		cout << "Exception: " << ex.what();
 	}
-	
 }

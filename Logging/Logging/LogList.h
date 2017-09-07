@@ -13,13 +13,13 @@ public:
 	//Ctors-------------------------------------
 	LogList(int bufferSize);
 	//Dtors-------------------------------------
-	~LogList() {}
+	~LogList();
 
 	//Functions
 
-	void AddData(char* data);
+	void Log(char* data);
 	void PrintLogs();
-	void SaveToFile();
+	
 
 private:
 	LinkedList<LogBuffer> _mPartition;
